@@ -1,36 +1,119 @@
-const name=document.getElementById("name");
-const age=document.getElementById("age");
-const grade=document.getElementById("grade");
-const addDetails=document.getElementById("user-button");
-const display=document.getElementById("display");
+const name = document.getElementById("name");
+const age = document.getElementById("age");
+const grade = document.getElementById("grade");
+const addDetails = document.getElementById("user-button");
+const display = document.getElementById("display");
+const userCountNode = document.getElementById("total-count");
 
-const displayUserDetails = () => {
+const errorNametNode = document.getElementById("error-name");
+const errorAgeNode = document.getElementById("error-age");
+const errorGradeNode = document.getElementById("error-grade");
 
-    const userName=name.value;
-    const userAge=age.value;
-    const userGrade=grade.value;
+let userCount = 0;
 
-    if(!userName || !userAge || !userGrade){
-        alert("pls enter all details.")
-        return;
-    }
+const isValid = (user) => {
+  let error = {};
+  resetErrorField();
+  let flag = 0;
+  if (user.name=="") {
+    error.name = "*Required Field."
+    errorNametNode.innerHTML = error.name;
+    flag = 1;
+  }
+  else if (user.name.length < 3) {
+    error.name = "*Length should be greater then 3."
+    errorNametNode.innerHTML = error.name;
+    flag = 1;
+  }
+  else if (user.name.length > 18) {
+    error.name = "*Length should be less then 18."
+    errorNametNode.innerHTML = error.name;
+    flag = 1;
+  }
+ 
+  if (typeof user.age == "string") {
+    error.age = "kindly put valid digit"
+    errorAgeNode.innerHTML = error.age;
+    flag = 1;
+  }
+  else if (user.age < 0) {
+    error.age = "*Kindly put valid Age."
+    errorAgeNode.innerHTML = error.age;
+    flag = 1;
+  }
+  if(user.grade==""){
+    error.grade = "*Required Field."
+    errorGradeNode.innerHTML = error.grade;
+    flag = 1;
+  }
+  else if (user.grade != "A" && user.grade != "B" && user.grade != "C" && user.grade != "D" && user.grade != "E") {
+    error.grade = "*Grade should be b/w A to E"
+    errorGradeNode.innerHTML = error.grade;
+    flag = 1;
+  }
+  if(flag==0){
+    return true;
+  }
+  else{
+    return false;
+  }
 
-    const newRow=document.createElement("tr");
-
-    const col1=newRow.insertCell(0);
-    const col2=newRow.insertCell(1);
-    const col3=newRow.insertCell(2);
-
-    col1.innerHTML=userName;
-    col2.innerHTML=userAge;
-    col3.innerHTML=userGrade;
-
-    display.append(newRow);  
-    
-    name.value="";
-    grade.value="";
-    age.value="";
 }
 
-addDetails.addEventListener("click",displayUserDetails);
+const resetFields = () => {
+  name.value = "";
+  grade.value = "";
+  age.value = "";
+}
+
+const resetErrorField=()=>{
+  errorNametNode.innerHTML="";
+  errorAgeNode.innerHTML="";
+  errorGradeNode.innerHTML="";
+}
+
+const creatUserRow = (user) => {
+  const newRow = document.createElement("tr");
+
+  const col1 = newRow.insertCell(0);
+  const col2 = newRow.insertCell(1);
+  const col3 = newRow.insertCell(2);
+
+  col1.innerHTML = user.name;
+  col2.innerHTML = user.age;
+  col3.innerHTML = user.grade;
+
+  return newRow;
+}
+
+const getUserFromInput = () => {
+  const user = {
+    name: name.value,
+    age: parseInt(age.value),
+    grade: grade.value
+  }
+  return user;
+}
+
+const updateUserCount = () => {
+  userCount++;
+  userCountNode.innerHTML ="Total Entry "+ userCount;
+}
+
+const displayUserDetails = () => {
+  const user = getUserFromInput();
+
+  if (isValid(user)) {
+    display.append(creatUserRow(user));
+    updateUserCount();
+    resetFields();
+    resetErrorField();
+  }
+  else {
+
+  }
+}
+
+
+addDetails.addEventListener("click", displayUserDetails);
 

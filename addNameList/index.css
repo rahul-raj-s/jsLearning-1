@@ -30,3 +30,7 @@ table,th,td{
     border: 2px solid black;
     padding: 5px;
 }
+#error-name,#error-age,#error-grade{
+    color: red;
+    
+}
