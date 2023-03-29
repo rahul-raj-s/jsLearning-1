@@ -18,6 +18,7 @@ const isValid = (user) => {
   resetErrorField();
   
   let hasError = false;
+  
   if (user.name=="") {
     error.name = "*Required Field."
     errorNametNode.innerHTML = error.name;
