@@ -1,0 +1,36 @@
+html{
+    text-align: center;
+}
+
+#display {
+    text-align: center;
+}
+#name{
+    margin-top: 100px;
+}
+#age{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+#grade{
+    margin-bottom: 20px;
+}
+table{
+    border-collapse: collapse;
+    width: 25%;
+    margin: 50px auto;
+}
+th{
+    color: black;
+}
+td{
+    color: green;
+}
+table,th,td{
+    border: 2px solid black;
+    padding: 5px;
+}
+#error-name,#error-age,#error-grade{
+    color: red;
+    
+}
