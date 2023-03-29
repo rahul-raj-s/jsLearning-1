@@ -12,52 +12,55 @@ const errorGradeNode = document.getElementById("error-grade");
 let userCount = 0;
 
 const isValid = (user) => {
+
   let error = {};
+
   resetErrorField();
-  let flag = 0;
+  
+  let hasError = false;
   if (user.name=="") {
     error.name = "*Required Field."
     errorNametNode.innerHTML = error.name;
-    flag = 1;
+    hasError = true;
   }
+  
   else if (user.name.length < 3) {
     error.name = "*Length should be greater then 3."
     errorNametNode.innerHTML = error.name;
-    flag = 1;
+    hasError = true;
   }
+
   else if (user.name.length > 18) {
     error.name = "*Length should be less then 18."
     errorNametNode.innerHTML = error.name;
-    flag = 1;
+    hasError = true;
   }
- 
+
   if (typeof user.age == "string") {
-    error.age = "kindly put valid digit"
+    error.age = "kindly put valid digit st"
     errorAgeNode.innerHTML = error.age;
-    flag = 1;
+    hasError = true;
   }
+
   else if (user.age < 0) {
     error.age = "*Kindly put valid Age."
     errorAgeNode.innerHTML = error.age;
-    flag = 1;
+    hasError = true;
   }
+
   if(user.grade==""){
     error.grade = "*Required Field."
     errorGradeNode.innerHTML = error.grade;
-    flag = 1;
-  }
-  else if (user.grade != "A" && user.grade != "B" && user.grade != "C" && user.grade != "D" && user.grade != "E") {
-    error.grade = "*Grade should be b/w A to E"
-    errorGradeNode.innerHTML = error.grade;
-    flag = 1;
-  }
-  if(flag==0){
-    return true;
-  }
-  else{
-    return false;
+    hasError = true;
   }
 
+  else if (!["A", "B", "C", "D", "E"].includes(user.grade)) {
+    error.grade = "*Grade should be b/w A to E"
+    errorGradeNode.innerHTML = error.grade;
+    hasError = true;
+  }
+
+  return !hasError;
 }
 
 const resetFields = () => {
